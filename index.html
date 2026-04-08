@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Cá Nhân | Vũ Bảo Tri Lâm</title>
+  <meta name="description" content="Website giới thiệu bản thân và định hướng học tập, được xây dựng bằng HTML, CSS và JavaScript thuần." />
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: rgba(255, 255, 255, 0.06);
+      --card: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.14);
+      --text: #eaf2ff;
+      --muted: #a8b7d6;
+      --primary: #6ea8fe;
+      --secondary: #8ef6d1;
+      --accent: #c7a8ff;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(110, 168, 254, 0.24), transparent 28%),
+        radial-gradient(circle at top right, rgba(199, 168, 255, 0.18), transparent 22%),
+        radial-gradient(circle at bottom left, rgba(142, 246, 209, 0.16), transparent 24%),
+        linear-gradient(135deg, #06101d 0%, #0b1730 48%, #081221 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .blur-orb {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .orb-1 {
+      top: 70px;
+      left: -40px;
+      background: rgba(110, 168, 254, 0.3);
+    }
+
+    .orb-2 {
+      top: 320px;
+      right: -80px;
+      background: rgba(199, 168, 255, 0.28);
+    }
+
+    .orb-3 {
+      bottom: 30px;
+      left: 22%;
+      background: rgba(142, 246, 209, 0.24);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 12, 25, 0.5);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(110, 168, 254, 0.95), rgba(199, 168, 255, 0.95));
+      color: #04111f;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #04111f;
+      box-shadow: 0 16px 32px rgba(110, 168, 254, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(110, 168, 254, 0.34);
+    }
+
+    .btn-secondary {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 90px 0;
+    }
+
+    .hero {
+      padding-top: 70px;
+      padding-bottom: 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--secondary);
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: 1.06;
+      margin-bottom: 18px;
+      letter-spacing: -1.4px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #ffffff, #90c2ff, #c7a8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.06rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat-card,
+    .glass-card,
+    .info-card,
+    .project-card,
+    .contact-card,
+    .timeline-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: var(--radius-md);
+    }
+
+    .stat-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+    }
+
+    .stat-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .glass-card {
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(110, 168, 254, 0.88), rgba(142, 246, 209, 0.85));
+      display: grid;
+      place-items: center;
+      color: #031120;
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    .status-pill {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(142, 246, 209, 0.12);
+      border: 1px solid rgba(142, 246, 209, 0.22);
+      color: var(--secondary);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .profile-name {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .profile-role {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .mini-item strong {
+      color: var(--text);
+    }
+
+    .section-title {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-title .label {
+      color: var(--secondary);
+      margin-bottom: 12px;
+      display: inline-block;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .project-card {
+      border-radius: var(--radius-md);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-badge {
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      margin-bottom: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--secondary);
+    }
+
+    .project-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 0.96rem;
+      margin-bottom: 18px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-tags span {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 20px;
+    }
+
+    .timeline-time {
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    .timeline-item h3 {
+      margin-bottom: 8px;
+    }
+
+    .timeline-item p {
+      color: var(--muted);
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .contact-card {
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      padding: 15px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .contact-item strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .form input,
+    .form textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font: inherit;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .form input:focus,
+    .form textarea:focus {
+      border-color: rgba(110, 168, 254, 0.6);
+      box-shadow: 0 0 0 4px rgba(110, 168, 254, 0.12);
+    }
+
+    .form textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 26px 0 46px;
+      color: var(--muted);
+    }
+
+    .footer-box {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: 0.7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .contact-wrap,
+      .info-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        position: static;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 0;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .hero h1 {
+        letter-spacing: -0.8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="blur-orb orb-1"></div>
+  <div class="blur-orb orb-2"></div>
+  <div class="blur-orb orb-3"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="#home" class="brand">
+        <div class="brand-badge">VL</div>
+        <div>
+          <div>Vũ Bảo Tri Lâm</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#about">Giới thiệu</a>
+        <a href="#skills">Kỹ năng</a>
+        <a href="#projects">Dự án</a>
+        <a href="#journey">Hành trình</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="reveal show">
+          <div class="eyebrow">Frontend Website • HTML/CSS/JavaScript</div>
+          <h1>
+            Xin chào, mình là <span>Vũ Bảo Tri Lâm</span><br />
+            Sinh viên yêu thích công nghệ và an toàn thông tin.
+          </h1>
+          <p>
+            Đây là website giới thiệu bản thân được xây dựng theo phong cách hiện đại, tối giản nhưng vẫn nổi bật.
+            Mục tiêu của mình là học tốt, thực hành nhiều và tạo ra những sản phẩm trực quan, dễ sử dụng.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Xem dự án nổi bật</a>
+            <a class="btn btn-secondary" href="#contact">Liên hệ với mình</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat-card">
+              <h3>03+</h3>
+              <p>Năm học tập và rèn luyện với công nghệ thông tin</p>
+            </div>
+            <div class="stat-card">
+              <h3>10+</h3>
+              <p>Bài thực hành và đồ án nhỏ đã hoàn thành</p>
+            </div>
+            <div class="stat-card">
+              <h3>100%</h3>
+              <p>Tinh thần chủ động học hỏi và cải thiện mỗi ngày</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card reveal">
+          <div class="profile-top">
+            <div class="avatar">VL</div>
+            <div class="status-pill">Sẵn sàng học hỏi</div>
+          </div>
+
+          <div class="profile-name">Thông tin nhanh</div>
+          <div class="profile-role">Sinh viên ngành Công nghệ thông tin / An toàn thông tin</div>
+
+          <div class="mini-list">
+            <div class="mini-item">
+              <span>Mục tiêu</span>
+              <strong>Phát triển web và bảo mật</strong>
+            </div>
+            <div class="mini-item">
+              <span>Sở thích</span>
+              <strong>Thiết kế giao diện, CTF, tự học</strong>
+            </div>
+            <div class="mini-item">
+              <span>Phong cách làm việc</span>
+              <strong>Kỷ luật, rõ ràng, thực tế</strong>
+            </div>
+            <div class="mini-item">
+              <span>Định hướng</span>
+              <strong>Frontend / Security / DFIR</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-title reveal">
+          <span class="label">GIỚI THIỆU</span>
+          <h2>Mình là ai và mình đang theo đuổi điều gì?</h2>
+          <p>
+            Mình là sinh viên yêu thích công nghệ, đặc biệt quan tâm đến phát triển giao diện web, trải nghiệm người dùng và các chủ đề về an toàn thông tin.
+            Mình thích học qua dự án thực tế, tự xây dựng sản phẩm và liên tục cải thiện kỹ năng của bản thân.
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card reveal">
+            <h3>Đam mê công nghệ</h3>
+            <p>
+              Mình thích khám phá cách một website đẹp được tạo ra từ HTML, CSS và JavaScript, từ bố cục, màu sắc đến hiệu ứng chuyển động.
+            </p>
+          </div>
+
+          <div class="info-card reveal">
+            <h3>Tư duy học qua thực hành</h3>
+            <p>
+              Mình ưu tiên làm thử, sửa lỗi, tối ưu và tự triển khai sản phẩm thật thay vì chỉ học lý thuyết.
+            </p>
+          </div>
+
+          <div class="info-card reveal">
+            <h3>Mục tiêu tương lai</h3>
+            <p>
+              Trở thành người có nền tảng tốt về xây dựng sản phẩm số, đồng thời hiểu thêm về bảo mật và khả năng vận hành hệ thống thực tế.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-title reveal">
+          <span class="label">KỸ NĂNG</span>
+          <h2>Những công cụ và kiến thức mình đang sử dụng</h2>
+          <p>
+            Đây là các nội dung mình đã học hoặc đang rèn luyện để phục vụ cho việc xây dựng website và phát triển bản thân trong lĩnh vực công nghệ.
+          </p>
+        </div>
+
+        <div class="glass-card reveal">
+          <h3 style="font-size: 1.35rem; margin-bottom: 8px;">Bộ kỹ năng hiện tại</h3>
+          <p style="color: var(--muted);">
+            Website này được làm hoàn toàn bằng mã nguồn frontend cơ bản, không dùng backend, phù hợp với yêu cầu bài tập lớn đầu tiên.
+          </p>
+
+          <div class="skill-chips">
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+            <span class="chip">JavaScript cơ bản</span>
+            <span class="chip">Responsive Design</span>
+            <span class="chip">Git & GitHub</span>
+            <span class="chip">UI cơ bản</span>
+            <span class="chip">Tư duy bố cục</span>
+            <span class="chip">Tự học công nghệ</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-title reveal">
+          <span class="label">DỰ ÁN</span>
+          <h2>Một vài nội dung tiêu biểu mà mình muốn giới thiệu</h2>
+          <p>
+            Vì đây là website cá nhân, mình trình bày những mảng mình đang quan tâm và muốn tiếp tục phát triển trong thời gian tới.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-badge">01 • Website cá nhân</div>
+            <h3>Portfolio Frontend</h3>
+            <p>
+              Một trang web tĩnh giới thiệu bản thân, kỹ năng và định hướng học tập, tập trung vào tính thẩm mỹ và trải nghiệm xem trên mọi thiết bị.
+            </p>
+            <div class="project-tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-badge">02 • Hướng học tập</div>
+            <h3>Khám phá An toàn thông tin</h3>
+            <p>
+              Mình đang tìm hiểu thêm về CTF, phân tích log, điều tra số và các kỹ năng thực hành liên quan đến an toàn thông tin.
+            </p>
+            <div class="project-tags">
+              <span>CTF</span>
+              <span>DFIR</span>
+              <span>Research</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-badge">03 • Mục tiêu tương lai</div>
+            <h3>Xây dựng sản phẩm thực tế</h3>
+            <p>
+              Trong thời gian tới, mình muốn hoàn thiện thêm các dự án học tập có thể demo trực tuyến và dễ dàng chia sẻ cho giảng viên hoặc nhà tuyển dụng.
+            </p>
+            <div class="project-tags">
+              <span>GitHub Pages</span>
+              <span>UI/UX</span>
+              <span>Self-learning</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey">
+      <div class="container">
+        <div class="section-title reveal">
+          <span class="label">HÀNH TRÌNH</span>
+          <h2>Kế hoạch phát triển trong thời gian tới</h2>
+          <p>
+            Đây là lộ trình ngắn gọn mình tự đặt ra để từng bước hoàn thiện kỹ năng và có thêm sản phẩm thực tế.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-time">Giai đoạn 1</div>
+            <div>
+              <h3>Củng cố nền tảng frontend</h3>
+              <p>
+                Luyện viết giao diện bằng HTML, CSS, JavaScript, hiểu rõ bố cục, responsive và nguyên tắc trình bày nội dung đẹp mắt.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-time">Giai đoạn 2</div>
+            <div>
+              <h3>Xây dựng thêm sản phẩm demo</h3>
+              <p>
+                Tạo thêm các website nhỏ như landing page, trang blog cá nhân hoặc trang giới thiệu dự án để tăng kỹ năng thực tế.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-time">Giai đoạn 3</div>
+            <div>
+              <h3>Kết hợp web với định hướng bảo mật</h3>
+              <p>
+                Tìm hiểu sâu hơn về cách ứng dụng kiến thức kỹ thuật vào an toàn thông tin, đặc biệt là tư duy logic, thực hành và phân tích tình huống.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-wrap">
+        <div class="contact-card reveal">
+          <div class="section-title" style="margin-bottom: 0;">
+            <span class="label">LIÊN HỆ</span>
+            <h2>Kết nối với mình</h2>
+            <p>
+              Bạn có thể sửa các thông tin bên dưới thành email, Facebook, GitHub hoặc số điện thoại thật của bạn trước khi nộp bài.
+            </p>
+          </div>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <strong>Email</strong>
+              example@gmail.com
+            </div>
+            <div class="contact-item">
+              <strong>GitHub</strong>
+              github.com/your-username
+            </div>
+            <div class="contact-item">
+              <strong>Facebook</strong>
+              facebook.com/your-profile
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card reveal">
+          <h3 style="font-size: 1.35rem; margin-bottom: 8px;">Gửi lời nhắn</h3>
+          <p style="color: var(--muted);">
+            Phần này là form giao diện để website trông hoàn chỉnh hơn. Vì đây là web tĩnh nên nút gửi sẽ không gửi dữ liệu thật.
+          </p>
+
+          <form class="form" id="contactForm">
+            <input type="text" placeholder="Họ và tên" required />
+            <input type="email" placeholder="Email" required />
+            <textarea placeholder="Nội dung lời nhắn" required></textarea>
+            <button class="btn btn-primary" type="submit">Gửi lời nhắn</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-box">
+      <p>© 2026 Vũ Bảo Tri Lâm. Website frontend cá nhân phục vụ bài tập lớn.</p>
+      <p>Thiết kế theo phong cách hiện đại, tối giản, dễ chỉnh sửa.</p>
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    revealElements.forEach((item) => observer.observe(item));
+
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      alert('Đây là website frontend tĩnh nên form chỉ là phần giao diện minh hoạ.');
+    });
+  </script>
+</body>
+</html>
